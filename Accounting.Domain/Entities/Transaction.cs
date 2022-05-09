@@ -1,4 +1,5 @@
 ﻿using Accounting.Domain.Enums;
+using Accounting.Domain.Exceptions;
 using Accounting.Domain.ValueObjects;
 using System;
 
@@ -13,6 +14,9 @@ namespace Accounting.Domain.Entities
 
         public Transaction(decimal amount, TransactionType type, PaymentMethod paymentMethod) : base()
         {
+            if(amount <= 0)
+                throw new InvalidTransaction($"The {nameof(Amount)} is out of range!");
+
             Amount = amount;
             Type = type;
             TransactionTime = DateTime.Now;
