@@ -3,6 +3,9 @@
     public enum PaymentType
     {
         Cash,
-        Online
+        BankTransfer,
+        CreditCard,
+        DebitCard,
+        Cryptocurrency
     }
 }

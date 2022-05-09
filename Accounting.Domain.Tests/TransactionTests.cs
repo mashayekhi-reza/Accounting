@@ -1,7 +1,6 @@
 using Accounting.Domain.Entities;
 using Accounting.Domain.Enums;
 using Accounting.Domain.Exceptions;
-using Accounting.Domain.ValueObjects;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -14,36 +13,36 @@ namespace Accounting.Domain.Tests
         public static IEnumerable<object[]> ValidTransactionsData =>
             new List<object[]>
             {
-                new object[] { 10.00m, TransactionType.Credit, new Cash()},
-                new object[] { 20.00m, TransactionType.Debit, new Banking()}
+                new object[] { 10.00m, TransactionType.Credit, PaymentType.Cash},
+                new object[] { 20.00m, TransactionType.Debit, PaymentType.BankTransfer}
             };
 
         public static IEnumerable<object[]> InvalidTransactionsData =>
             new List<object[]>
             {
-                    new object[] { -10.00m, TransactionType.Credit, new Cash()},
-                    new object[] { 0, TransactionType.Debit, new Banking()},
-                    new object[] { null, TransactionType.Debit, new Banking()}
+                    new object[] { -10.00m, TransactionType.Credit, PaymentType.Cash},
+                    new object[] { 0, TransactionType.Debit, PaymentType.BankTransfer},
+                    new object[] { null, TransactionType.Debit, PaymentType.BankTransfer}
             };
 
         [Theory]
         [MemberData(nameof(ValidTransactionsData))]
-        public void CreateValidTransaction(decimal amount, TransactionType transactionType, PaymentMethod paymentMethod)
+        public void CreateValidTransaction(decimal amount, TransactionType transactionType, PaymentType paymentType)
         {
-            var trn = new Transaction(amount, transactionType, paymentMethod);
+            var trn = new Transaction(amount, transactionType, paymentType);
 
             Guid.TryParse(trn.ID.ToString(), out _).Should().Be(true);
             trn.Amount.Should().Be(amount);
             trn.Type.Should().Be(transactionType);
             trn.TransactionTime.Date.Should().Be(DateTime.Now.Date);
-            trn.PaymentMethod.Type.Should().Be(paymentMethod.Type);
+            trn.PaymentType.Should().Be(paymentType);
         }
 
         [Theory]
         [MemberData(nameof(InvalidTransactionsData))]
-        public void InvalidAmount(decimal amount, TransactionType transactionType, PaymentMethod paymentMethod)
+        public void InvalidAmount(decimal amount, TransactionType transactionType, PaymentType paymentType)
         {
-            Action action = () => new Transaction(amount, transactionType, paymentMethod);
+            Action action = () => new Transaction(amount, transactionType, paymentType);
 
             action.Should().Throw<InvalidTransaction>().WithMessage($"The {nameof(Transaction.Amount)} is out of range!");
         }
