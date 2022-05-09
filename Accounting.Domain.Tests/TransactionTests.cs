@@ -13,24 +13,24 @@ namespace Accounting.Domain.Tests
         public static IEnumerable<object[]> ValidTransactionsData =>
             new List<object[]>
             {
-                new object[] { 10.00m, TransactionType.Credit, PaymentMethod.Cash},
-                new object[] { 20.00m, TransactionType.Debit, PaymentMethod.BankTransfer},
-                new object[] { 30.00m, TransactionType.Credit, PaymentMethod.CreditCard},
-                new object[] { 40.00m, TransactionType.Debit, PaymentMethod.DebitCard},
-                new object[] { 50.00m, TransactionType.Credit, PaymentMethod.Cryptocurrency}
+                new object[] { 10.00m, TransactionType.Credit, Account.Cash},
+                new object[] { 20.00m, TransactionType.Debit, Account.BankTransfer},
+                new object[] { 30.00m, TransactionType.Credit, Account.CreditCard},
+                new object[] { 40.00m, TransactionType.Debit, Account.DebitCard},
+                new object[] { 50.00m, TransactionType.Credit, Account.Cryptocurrency}
             };
 
         public static IEnumerable<object[]> InvalidTransactionAmountData =>
             new List<object[]>
             {
-                    new object[] { -10.00m, TransactionType.Credit, PaymentMethod.Cash},
-                    new object[] { 0, TransactionType.Debit, PaymentMethod.BankTransfer},
-                    new object[] { null, TransactionType.Debit, PaymentMethod.BankTransfer}
+                    new object[] { -10.00m, TransactionType.Credit, Account.Cash},
+                    new object[] { 0, TransactionType.Debit, Account.BankTransfer},
+                    new object[] { null, TransactionType.Debit, Account.BankTransfer}
             };
 
         [Theory]
         [MemberData(nameof(ValidTransactionsData))]
-        public void CreateValidTransaction(decimal amount, TransactionType transactionType, PaymentMethod paymentType)
+        public void CreateValidTransaction(decimal amount, TransactionType transactionType, Account paymentType)
         {
             var trn = new Transaction(amount, transactionType, paymentType);
 
@@ -43,7 +43,7 @@ namespace Accounting.Domain.Tests
 
         [Theory]
         [MemberData(nameof(InvalidTransactionAmountData))]
-        public void InvalidAmount(decimal amount, TransactionType transactionType, PaymentMethod paymentType)
+        public void InvalidAmount(decimal amount, TransactionType transactionType, Account paymentType)
         {
             Action action = () => new Transaction(amount, transactionType, paymentType);
 
