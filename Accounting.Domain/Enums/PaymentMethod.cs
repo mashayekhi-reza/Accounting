@@ -1,6 +1,6 @@
 ﻿namespace Accounting.Domain.Enums
 {
-    public enum PaymentType
+    public enum PaymentMethod
     {
         Cash,
         BankTransfer,

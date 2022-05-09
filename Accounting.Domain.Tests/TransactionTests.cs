@@ -13,34 +13,34 @@ namespace Accounting.Domain.Tests
         public static IEnumerable<object[]> ValidTransactionsData =>
             new List<object[]>
             {
-                new object[] { 10.00m, TransactionType.Credit, PaymentType.Cash},
-                new object[] { 20.00m, TransactionType.Debit, PaymentType.BankTransfer}
+                new object[] { 10.00m, TransactionType.Credit, PaymentMethod.Cash},
+                new object[] { 20.00m, TransactionType.Debit, PaymentMethod.BankTransfer}
             };
 
         public static IEnumerable<object[]> InvalidTransactionsData =>
             new List<object[]>
             {
-                    new object[] { -10.00m, TransactionType.Credit, PaymentType.Cash},
-                    new object[] { 0, TransactionType.Debit, PaymentType.BankTransfer},
-                    new object[] { null, TransactionType.Debit, PaymentType.BankTransfer}
+                    new object[] { -10.00m, TransactionType.Credit, PaymentMethod.Cash},
+                    new object[] { 0, TransactionType.Debit, PaymentMethod.BankTransfer},
+                    new object[] { null, TransactionType.Debit, PaymentMethod.BankTransfer}
             };
 
         [Theory]
         [MemberData(nameof(ValidTransactionsData))]
-        public void CreateValidTransaction(decimal amount, TransactionType transactionType, PaymentType paymentType)
+        public void CreateValidTransaction(decimal amount, TransactionType transactionType, PaymentMethod paymentType)
         {
             var trn = new Transaction(amount, transactionType, paymentType);
 
             Guid.TryParse(trn.ID.ToString(), out _).Should().Be(true);
             trn.Amount.Should().Be(amount);
             trn.Type.Should().Be(transactionType);
-            trn.TransactionTime.Date.Should().Be(DateTime.Now.Date);
-            trn.PaymentType.Should().Be(paymentType);
+            trn.Time.Date.Should().Be(DateTime.Now.Date);
+            trn.PaymentMethod.Should().Be(paymentType);
         }
 
         [Theory]
         [MemberData(nameof(InvalidTransactionsData))]
-        public void InvalidAmount(decimal amount, TransactionType transactionType, PaymentType paymentType)
+        public void InvalidAmount(decimal amount, TransactionType transactionType, PaymentMethod paymentType)
         {
             Action action = () => new Transaction(amount, transactionType, paymentType);
 

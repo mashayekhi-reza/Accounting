@@ -8,18 +8,18 @@ namespace Accounting.Domain.Entities
     {
         public decimal Amount { get; private set; }
         public TransactionType Type { get; private set; }
-        public DateTime TransactionTime { get; private set; }
-        public PaymentType PaymentType { get; private set; }
+        public DateTime Time { get; private set; }
+        public PaymentMethod PaymentMethod { get; private set; }
 
-        public Transaction(decimal amount, TransactionType type, PaymentType paymentType)
+        public Transaction(decimal amount, TransactionType type, PaymentMethod paymentType)
         {
             if(amount <= 0)
                 throw new InvalidTransaction($"The {nameof(Amount)} is out of range!");
 
             Amount = amount;
             Type = type;
-            TransactionTime = DateTime.Now;
-            PaymentType = paymentType;
+            Time = DateTime.Now;
+            PaymentMethod = paymentType;
         }
     }
 }
