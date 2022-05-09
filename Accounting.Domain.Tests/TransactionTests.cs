@@ -1,23 +1,33 @@
 using Accounting.Domain.Entities;
+using Accounting.Domain.Enums;
 using Accounting.Domain.ValueObjects;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Accounting.Domain.Tests
 {
     public class TransactionTests
     {
-        [Fact]
-        public void CreateCashTransaction()
-        {
-            var transaction = new Transaction(10.00m, Enums.TransactionType.Credit, new Cash());
+        public static IEnumerable<object[]> ValidTransactionsData =>
+            new List<object[]>
+            {
+                new object[] { 10.00m, TransactionType.Credit, new Cash()},
+                new object[] { 20.00m, TransactionType.Debit, new Banking()}
+            };
 
-            bool isValid = Guid.TryParse(transaction.ID.ToString(), out _);
-            isValid.Should().Be(true);
-            transaction.Amount.Should().Be(10.00m);
-            transaction.TransactionTime.Date.Should().Be(DateTime.Now.Date);
-            transaction.PaymentMethod.GetType().Should().Be(typeof(Cash));
+        [Theory]
+        [MemberData(nameof(ValidTransactionsData))]
+        public void CreateValidTransaction(decimal amount, TransactionType transactionType, PaymentMethod paymentMethod)
+        {
+            var trn = new Transaction(amount, transactionType, paymentMethod);
+
+            Guid.TryParse(trn.ID.ToString(), out _).Should().Be(true);
+            trn.Amount.Should().Be(amount);
+            trn.Type.Should().Be(transactionType);
+            trn.TransactionTime.Date.Should().Be(DateTime.Now.Date);
+            trn.PaymentMethod.Type.Should().Be(paymentMethod.Type);
         }
     }
 }
