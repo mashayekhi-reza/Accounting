@@ -14,10 +14,13 @@ namespace Accounting.Domain.Tests
             new List<object[]>
             {
                 new object[] { 10.00m, TransactionType.Credit, PaymentMethod.Cash},
-                new object[] { 20.00m, TransactionType.Debit, PaymentMethod.BankTransfer}
+                new object[] { 20.00m, TransactionType.Debit, PaymentMethod.BankTransfer},
+                new object[] { 30.00m, TransactionType.Credit, PaymentMethod.CreditCard},
+                new object[] { 40.00m, TransactionType.Debit, PaymentMethod.DebitCard},
+                new object[] { 50.00m, TransactionType.Credit, PaymentMethod.Cryptocurrency}
             };
 
-        public static IEnumerable<object[]> InvalidTransactionsData =>
+        public static IEnumerable<object[]> InvalidTransactionAmountData =>
             new List<object[]>
             {
                     new object[] { -10.00m, TransactionType.Credit, PaymentMethod.Cash},
@@ -39,7 +42,7 @@ namespace Accounting.Domain.Tests
         }
 
         [Theory]
-        [MemberData(nameof(InvalidTransactionsData))]
+        [MemberData(nameof(InvalidTransactionAmountData))]
         public void InvalidAmount(decimal amount, TransactionType transactionType, PaymentMethod paymentType)
         {
             Action action = () => new Transaction(amount, transactionType, paymentType);
