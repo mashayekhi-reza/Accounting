@@ -12,7 +12,9 @@ namespace Accounting.Domain.Entities
 
         public Entity(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy)
         {
-            // TODO: add test and validation
+            if (modifiedOn != DateTime.MinValue & modifiedOn <= createdOn)
+                throw new ArgumentException($"The {nameof(ModifiedOn)} should be later than {nameof(CreatedOn)}!");
+
             ID = id;
             CreatedOn = createdOn;
             CreatedBy = createdBy;
