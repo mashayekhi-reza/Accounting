@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Taging.Domain.Tests.Entities
+namespace Accounting.Domain.Tests.Entities
 {
     public class TagTest
     {
