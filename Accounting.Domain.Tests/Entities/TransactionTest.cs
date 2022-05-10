@@ -20,14 +20,6 @@ namespace Accounting.Domain.Tests.Entities
                 new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "My Bank") }
             };
 
-        //public static IEnumerable<object[]> InvalidTransactionAmountData =>
-        //    new List<object[]>
-        //    {
-        //            new object[] { -10.00m, TransactionType.Credit, Account.Cash},
-        //            new object[] { 0, TransactionType.Debit, Account.BankTransfer},
-        //            new object[] { null, TransactionType.Debit, Account.BankTransfer}
-        //    };
-
         [Theory]
         [MemberData(nameof(ValidTransactionsData))]
         public void CreateValidTransaction(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy, 
@@ -101,14 +93,5 @@ namespace Accounting.Domain.Tests.Entities
             return new Transaction(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), 10.00m, TransactionType.Credit,
                             new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Cash"));
         }
-
-        //[Theory]
-        //[MemberData(nameof(InvalidTransactionAmountData))]
-        //public void InvalidAmount(decimal amount, TransactionType transactionType, Account paymentType)
-        //{
-        //    Action action = () => new Transaction(amount, transactionType, paymentType);
-
-        //    action.Should().Throw<InvalidTransaction>().WithMessage($"The {nameof(Transaction.Amount)} is out of range!");
-        //}
     }
 }
