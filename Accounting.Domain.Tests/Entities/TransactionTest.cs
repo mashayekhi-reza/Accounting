@@ -55,11 +55,13 @@ namespace Accounting.Domain.Tests.Entities
         public void AddSeveralTagsSuccessfully()
         {
             Transaction trn = CreateAValidTransaction();
-            var tags = new List<Tag>();
-            tags.Add(new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Grocery"));
-            tags.Add(new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Food"));
-            tags.Add(new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Fun"));
-            tags.Add(new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Educational"));
+            var tags = new List<Tag>
+            {
+                new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Grocery"),
+                new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Food"),
+                new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Fun"),
+                new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Educational")
+            };
             tags.ForEach(t => trn.AddTag(t));
 
             trn.Tags.Count.Should().Be(4);
