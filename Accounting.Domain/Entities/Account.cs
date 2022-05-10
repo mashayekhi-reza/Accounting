@@ -13,7 +13,6 @@ namespace Accounting.Domain.Entities
             Name = name;
         }
 
-        //TODO: tests
         public string Name { get; private set; }
     }
 }
