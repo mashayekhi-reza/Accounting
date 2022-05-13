@@ -7,11 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Transaction\Queries\" />
+    <Folder Include="Transactions\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Accounting.Domain\Accounting.Domain.csproj" />
   </ItemGroup>
 
 </Project>

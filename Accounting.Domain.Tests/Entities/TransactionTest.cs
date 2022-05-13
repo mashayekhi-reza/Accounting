@@ -1,4 +1,5 @@
 using Accounting.Domain.Entities;
+using Accounting.Domain.Entities.Transaction;
 using Accounting.Domain.Enums;
 using Accounting.Domain.Exceptions;
 using FluentAssertions;

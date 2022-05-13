@@ -3,7 +3,7 @@ using Accounting.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 
-namespace Accounting.Domain.Entities
+namespace Accounting.Domain.Entities.Transaction
 {
     public class Transaction : Entity
     {
@@ -21,7 +21,7 @@ namespace Accounting.Domain.Entities
             Amount = amount;
             Type = type;
             Account = account;
-            Tags = new List<Tag>();          
+            Tags = new List<Tag>();
         }
 
         public void AddTag(Tag tag)
@@ -36,7 +36,7 @@ namespace Accounting.Domain.Entities
         {
             if (!Tags.Contains(tag))
                 throw new InvalidTagOperation($"The {nameof(Tag)} has not found!");
-            
+
             Tags.Remove(tag);
         }
     }
