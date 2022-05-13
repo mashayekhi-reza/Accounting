@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.Domain", "Accoun
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{02AA2D28-09CE-48D7-890F-74DBE0DB5CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.Domain.Tests", "Accounting.Domain.Tests\Accounting.Domain.Tests.csproj", "{49059962-F627-45F9-920C-BF3B9EDF993D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.Domain.Tests", "Accounting.Domain.Tests\Accounting.Domain.Tests.csproj", "{49059962-F627-45F9-920C-BF3B9EDF993D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.Application", "Accounting.Application\Accounting.Application.csproj", "{DE766EE5-20FE-49B6-B9B3-34B3788F3517}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{49059962-F627-45F9-920C-BF3B9EDF993D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49059962-F627-45F9-920C-BF3B9EDF993D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49059962-F627-45F9-920C-BF3B9EDF993D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE766EE5-20FE-49B6-B9B3-34B3788F3517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE766EE5-20FE-49B6-B9B3-34B3788F3517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE766EE5-20FE-49B6-B9B3-34B3788F3517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE766EE5-20FE-49B6-B9B3-34B3788F3517}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D134B14C-A743-4D34-B1A1-84487762DD22} = {747B79D3-C7DB-4084-B899-268A189F20D0}
 		{49059962-F627-45F9-920C-BF3B9EDF993D} = {02AA2D28-09CE-48D7-890F-74DBE0DB5CDC}
+		{DE766EE5-20FE-49B6-B9B3-34B3788F3517} = {747B79D3-C7DB-4084-B899-268A189F20D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {613537D9-4A9F-4E80-9027-A28A0B738900}
