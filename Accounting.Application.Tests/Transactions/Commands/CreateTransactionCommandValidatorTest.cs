@@ -1,0 +1,73 @@
+﻿using Accounting.Application.DTOs;
+using Accounting.Application.Transactions.Commands;
+using Accounting.Domain.Entities;
+using Accounting.Domain.Enums;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Accounting.Application.Tests.Transactions.Commands;
+
+public class CreateTransactionCommandValidatorTest
+{
+
+    private readonly CreateTransactionCommandValidator _validator = new CreateTransactionCommandValidator();
+
+    public static IEnumerable<object[]> ValidCreateTransactionCommandData =>
+    new List<object[]>
+    {
+        new object[] { Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), 10.00m, TransactionType.Credit,
+        new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Cash") },
+        new object[] { Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), 10.00m, TransactionType.Debit,
+        new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "My Bank") }
+    };
+
+    public static IEnumerable<object[]> NegativeAmounts =>
+    new List<object[]>
+    {
+        new object[] { Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), -220, TransactionType.Credit,
+        new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Cash") },
+        new object[] { Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), -10.00m, TransactionType.Debit,
+        new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "My Bank") }
+    };
+
+    [Theory]
+    [MemberData(nameof(ValidCreateTransactionCommandData))]
+    public void ValidCreateTransactionCommand(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
+            decimal amount, TransactionType type, AccountDto account)
+    {
+        var request = new CreateTransactionCommand(id, createdOn, createdBy, modifiedOn, modifiedBy,
+            amount, type, account);
+
+        _validator.Validate(request).IsValid.Should().Be(true);
+    }
+
+
+    [Theory]
+    [MemberData(nameof(NegativeAmounts))]
+    public void ValidationFailedForNegativeAmounts(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
+            decimal amount, TransactionType type, AccountDto account)
+    {
+        var request = new CreateTransactionCommand(id, createdOn, createdBy, modifiedOn, modifiedBy,
+            amount, type, account);
+
+        var result = _validator.Validate(request);
+        result.IsValid.Should().Be(false);
+        result.Errors.First().ErrorMessage.Should().Contain("'Amount' must be greater than '0'");
+    }
+
+    [Fact]
+    public void ValidationFailedForNullAccountName()
+    {
+        var request = new CreateTransactionCommand(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), 10.00m, TransactionType.Credit,
+                new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), ""));
+
+        var result = _validator.Validate(request);
+        result.IsValid.Should().Be(false);
+        result.Errors.First().ErrorMessage.Should().Contain("'Account Name' must be between 1 and 100 characters.");
+    }
+}
