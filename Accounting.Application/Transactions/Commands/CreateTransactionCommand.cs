@@ -14,5 +14,17 @@ public class CreateTransactionCommand : IRequest<Guid>
     public decimal Amount { get; private set; }
     public TransactionType Type { get; private set; }
     public Account Account { get; private set; }
-    public List<Tag> Tags { get; private set; }
+
+    public CreateTransactionCommand(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy, 
+        decimal amount, TransactionType type, Account account)
+    {
+        ID = id;
+        CreatedOn = createdOn;
+        CreatedBy = createdBy;
+        ModifiedOn = modifiedOn;
+        ModifiedBy = modifiedBy;
+        Amount = amount;
+        Type = type;
+        Account = account;
+    }
 }
