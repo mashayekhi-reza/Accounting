@@ -28,7 +28,7 @@ public static class MockRepositories
         {
             transactions.Add(transaction);
 
-            return transactions.Last().ID;
+            return transactions.Last();
         });
 
         repo.Setup(r => r.GetAll()).ReturnsAsync(transactions);

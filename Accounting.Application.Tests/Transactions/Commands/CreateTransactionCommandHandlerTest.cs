@@ -20,12 +20,14 @@ public class CreateTransactionCommandHandlerTest
     public CreateTransactionCommandHandlerTest()
     {
         _transactionRepository = MockRepositories.GetTransactionRepository();
+
         var mapperConfig = new MapperConfiguration(c =>
         {
-            c.CreateMap<AccountDto, Account>(); 
+            c.AddProfile<MappingProfile>();
         });
 
         _mapper = mapperConfig.CreateMapper();
+       
     }
 
     [Fact]
@@ -36,9 +38,9 @@ public class CreateTransactionCommandHandlerTest
         var request = new CreateTransactionCommand(new TransactionDto(id, DateTime.Now, Guid.NewGuid(), null, null, 10.00m, TransactionType.Debit,
             new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Online")));
 
-        Guid response = await handler.Handle(request, new System.Threading.CancellationToken());
+        var response = await handler.Handle(request, new System.Threading.CancellationToken());
 
-        response.Should().Be(id);
+        response.Should().Be(request.Transaction);
         var trns = await _transactionRepository.GetAll();
         trns.Count().Should().Be(3);
     }

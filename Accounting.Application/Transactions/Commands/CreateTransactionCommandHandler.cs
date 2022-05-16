@@ -1,11 +1,12 @@
-﻿using Accounting.Domain.Entities;
+﻿using Accounting.Application.DTOs;
+using Accounting.Domain.Entities;
 using Accounting.Domain.Entities.Transaction;
 using AutoMapper;
 using MediatR;
 
 namespace Accounting.Application.Transactions.Commands;
 
-public class CreateTransactionCommandHandler : IRequestHandler<CreateTransactionCommand, Guid>
+public class CreateTransactionCommandHandler : IRequestHandler<CreateTransactionCommand, TransactionDto>
 {
     private readonly ITransactionRepository _transactionRepository;
     private readonly IMapper _mapper;
@@ -17,9 +18,9 @@ public class CreateTransactionCommandHandler : IRequestHandler<CreateTransaction
         _transactionRepository = transactionRepository;
         _mapper = mapper;
     }
-    public Task<Guid> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
+    public async Task<TransactionDto> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
     {
-        var transaction = new Transaction(request.Transaction.ID,
+        var requestedTransaction = new Transaction(request.Transaction.ID,
                                             request.Transaction.CreatedOn,
                                             request.Transaction.CreatedBy,
                                             request.Transaction.ModifiedOn,
@@ -28,6 +29,8 @@ public class CreateTransactionCommandHandler : IRequestHandler<CreateTransaction
                                             request.Transaction.Type,
                                             _mapper.Map<Account>(request.Transaction.Account));
 
-        return _transactionRepository.Insert(transaction);
+        var savedTransaction = await _transactionRepository.Insert(requestedTransaction);
+        var transactionDto = _mapper.Map<TransactionDto>(savedTransaction);
+        return transactionDto;
     }
 }
