@@ -37,8 +37,8 @@ namespace Accounting.Application.Tests.Transactions.Commands
         {
             var handler = new CreateTransactionCommandHandler(_transactionRepository, _mapper);
             var id = Guid.NewGuid();
-            var request = new CreateTransactionCommand(id, DateTime.Now, Guid.NewGuid(), null, null, 10.00m, TransactionType.Debit,
-                new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Online"));
+            var request = new CreateTransactionCommand(new TransactionDto(id, DateTime.Now, Guid.NewGuid(), null, null, 10.00m, TransactionType.Debit,
+                new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Online")));
 
             Guid response = await handler.Handle(request, new System.Threading.CancellationToken());
 

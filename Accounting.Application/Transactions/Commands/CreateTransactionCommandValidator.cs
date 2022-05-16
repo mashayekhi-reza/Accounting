@@ -11,10 +11,10 @@ namespace Accounting.Application.Transactions.Commands
     {
         public CreateTransactionCommandValidator()
         {
-            RuleFor(v => v.Amount)
+            RuleFor(v => v.Transaction.Amount)
                 .GreaterThan(0);
 
-            RuleFor(v => v.Account.Name)
+            RuleFor(v => v.Transaction.Account.Name)
                 .Length(1, 100);
         }
     }

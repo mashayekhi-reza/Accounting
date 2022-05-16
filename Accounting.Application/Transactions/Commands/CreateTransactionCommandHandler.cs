@@ -16,18 +16,18 @@ public class CreateTransactionCommandHandler : IRequestHandler<CreateTransaction
         IMapper mapper)
     {
         _transactionRepository = transactionRepository;
-        this._mapper = mapper;
+        _mapper = mapper;
     }
     public Task<Guid> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
     {
-        var transaction = new Transaction(request.ID,
-                                            request.CreatedOn,
-                                            request.CreatedBy,
-                                            request.ModifiedOn,
-                                            request.ModifiedBy,
-                                            request.Amount,
-                                            request.Type,
-                                            _mapper.Map<Account>(request.Account));
+        var transaction = new Transaction(request.Transaction.ID,
+                                            request.Transaction.CreatedOn,
+                                            request.Transaction.CreatedBy,
+                                            request.Transaction.ModifiedOn,
+                                            request.Transaction.ModifiedBy,
+                                            request.Transaction.Amount,
+                                            request.Transaction.Type,
+                                            _mapper.Map<Account>(request.Transaction.Account));
 
         return _transactionRepository.Insert(transaction);
     }

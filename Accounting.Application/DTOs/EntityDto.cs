@@ -1,20 +1,3 @@
-﻿namespace Accounting.Application.DTOs
-{
-    public class EntityDto
-    {
-        public EntityDto(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy)
-        {
-            ID = id;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            ModifiedOn = modifiedOn;
-            ModifiedBy = modifiedBy;
-        }
+﻿namespace Accounting.Application.DTOs;
 
-        public Guid ID { get; private set; }
-        public DateTime CreatedOn { get; private set; }
-        public Guid CreatedBy { get; private set; }
-        public DateTime? ModifiedOn { get; private set; }
-        public Guid? ModifiedBy { get; private set; }
-    }
-}
+public record EntityDto(Guid ID, DateTime CreatedOn, Guid CreatedBy, DateTime? ModifiedOn, Guid? ModifiedBy);

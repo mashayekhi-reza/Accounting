@@ -40,8 +40,9 @@ public class CreateTransactionCommandValidatorTest
     public void ValidCreateTransactionCommand(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
             decimal amount, TransactionType type, AccountDto account)
     {
-        var request = new CreateTransactionCommand(id, createdOn, createdBy, modifiedOn, modifiedBy,
-            amount, type, account);
+        var request = new CreateTransactionCommand(
+            new TransactionDto(id, createdOn, createdBy, modifiedOn, modifiedBy,
+            amount, type, account));
 
         _validator.Validate(request).IsValid.Should().Be(true);
     }
@@ -52,22 +53,24 @@ public class CreateTransactionCommandValidatorTest
     public void ValidationFailedForNegativeAmounts(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
             decimal amount, TransactionType type, AccountDto account)
     {
-        var request = new CreateTransactionCommand(id, createdOn, createdBy, modifiedOn, modifiedBy,
-            amount, type, account);
+        var request = new CreateTransactionCommand(
+            new TransactionDto(id, createdOn, createdBy, modifiedOn, modifiedBy,
+            amount, type, account));
 
         var result = _validator.Validate(request);
         result.IsValid.Should().Be(false);
-        result.Errors.First().ErrorMessage.Should().Contain("'Amount' must be greater than '0'");
+        result.Errors.First().ErrorMessage.Should().Contain("must be greater than '0'");
     }
 
     [Fact]
     public void ValidationFailedForNullAccountName()
     {
-        var request = new CreateTransactionCommand(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), 10.00m, TransactionType.Credit,
-                new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), ""));
+        var request = new CreateTransactionCommand(
+            new TransactionDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), 10.00m, TransactionType.Credit,
+                new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "")));
 
         var result = _validator.Validate(request);
         result.IsValid.Should().Be(false);
-        result.Errors.First().ErrorMessage.Should().Contain("'Account Name' must be between 1 and 100 characters.");
+        result.Errors.First().ErrorMessage.Should().Contain("must be between 1 and 100 characters.");
     }
 }

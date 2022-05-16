@@ -1,13 +1,4 @@
-﻿namespace Accounting.Application.DTOs
-{
-    public class AccountDto : EntityDto
-    {
-        public string Name { get; private set; }
+﻿namespace Accounting.Application.DTOs;
 
-        public AccountDto(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy, string name)
-            : base(id, createdOn, createdBy, modifiedOn, modifiedBy)
-        {
-            Name = name;
-        }
-    }
-}
+public record AccountDto(Guid ID, DateTime CreatedOn, Guid CreatedBy, DateTime? ModifiedOn, Guid? ModifiedBy, string Name) 
+    : EntityDto(ID, CreatedOn, CreatedBy, ModifiedOn, ModifiedBy);
