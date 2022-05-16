@@ -1,21 +1,15 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Accounting.Application.Transactions.Commands
+namespace Accounting.Application.Transactions.Commands;
+
+public class CreateTransactionCommandValidator : AbstractValidator<CreateTransactionCommand>
 {
-    public class CreateTransactionCommandValidator : AbstractValidator<CreateTransactionCommand>
+    public CreateTransactionCommandValidator()
     {
-        public CreateTransactionCommandValidator()
-        {
-            RuleFor(v => v.Transaction.Amount)
-                .GreaterThan(0);
+        RuleFor(v => v.Transaction.Amount)
+            .GreaterThan(0);
 
-            RuleFor(v => v.Transaction.Account.Name)
-                .Length(1, 100);
-        }
+        RuleFor(v => v.Transaction.Account.Name)
+            .Length(1, 100);
     }
 }

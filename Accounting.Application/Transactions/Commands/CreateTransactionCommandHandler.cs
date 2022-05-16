@@ -1,5 +1,4 @@
-﻿using Accounting.Application.DTOs;
-using Accounting.Domain.Entities;
+﻿using Accounting.Domain.Entities;
 using Accounting.Domain.Entities.Transaction;
 using AutoMapper;
 using MediatR;

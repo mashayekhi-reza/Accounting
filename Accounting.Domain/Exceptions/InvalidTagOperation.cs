@@ -1,21 +1,20 @@
 ﻿using System;
 
-namespace Accounting.Domain.Exceptions
+namespace Accounting.Domain.Exceptions;
+
+public class InvalidTagOperation : Exception
 {
-    public class InvalidTagOperation : Exception
+    public InvalidTagOperation()
     {
-        public InvalidTagOperation()
-        {
-        }
+    }
 
-        public InvalidTagOperation(string message)
-            : base(message)
-        {
-        }
+    public InvalidTagOperation(string message)
+        : base(message)
+    {
+    }
 
-        public InvalidTagOperation(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
+    public InvalidTagOperation(string message, Exception inner)
+        : base(message, inner)
+    {
     }
 }

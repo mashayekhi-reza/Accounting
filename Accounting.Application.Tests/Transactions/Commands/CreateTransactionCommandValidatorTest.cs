@@ -1,13 +1,10 @@
 ﻿using Accounting.Application.DTOs;
 using Accounting.Application.Transactions.Commands;
-using Accounting.Domain.Entities;
 using Accounting.Domain.Enums;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Accounting.Application.Tests.Transactions.Commands;

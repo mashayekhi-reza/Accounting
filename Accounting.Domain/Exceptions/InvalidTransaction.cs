@@ -1,22 +1,21 @@
 ﻿using System;
 
-namespace Accounting.Domain.Exceptions
+namespace Accounting.Domain.Exceptions;
+
+public class InvalidTransaction : Exception
 {
-    public class InvalidTransaction : Exception
+    public InvalidTransaction()
     {
-        public InvalidTransaction()
-        {
-        }
-
-        public InvalidTransaction(string message)
-            : base(message)
-        {
-        }
-
-        public InvalidTransaction(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
     }
-   
+
+    public InvalidTransaction(string message)
+        : base(message)
+    {
+    }
+
+    public InvalidTransaction(string message, Exception inner)
+        : base(message, inner)
+    {
+    }
 }
+

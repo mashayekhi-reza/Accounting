@@ -1,8 +1,7 @@
-﻿namespace Accounting.Domain.Enums
+﻿namespace Accounting.Domain.Enums;
+
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        Debit,
-        Credit
-    }
+    Debit,
+    Credit
 }
