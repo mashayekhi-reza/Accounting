@@ -31,6 +31,8 @@ public static class MockRepositories
             return transactions.Last();
         });
 
+        repo.Setup(r => r.GetAll()).ReturnsAsync(transactions);
+
         return repo.Object;
     }
 }
