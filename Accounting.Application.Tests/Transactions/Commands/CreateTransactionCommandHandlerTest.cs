@@ -41,7 +41,5 @@ public class CreateTransactionCommandHandlerTest
         var response = await handler.Handle(request, new System.Threading.CancellationToken());
 
         response.Should().Be(request.Transaction);
-        var trns = await _transactionRepository.GetAll();
-        trns.Count().Should().Be(3);
     }
 }
