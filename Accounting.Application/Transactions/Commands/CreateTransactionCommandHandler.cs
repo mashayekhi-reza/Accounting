@@ -20,14 +20,7 @@ public class CreateTransactionCommandHandler : IRequestHandler<CreateTransaction
     }
     public async Task<TransactionDto> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
     {
-        var requestedTransaction = new Transaction(request.Transaction.ID,
-                                            request.Transaction.CreatedOn,
-                                            request.Transaction.CreatedBy,
-                                            request.Transaction.ModifiedOn,
-                                            request.Transaction.ModifiedBy,
-                                            request.Transaction.Amount,
-                                            request.Transaction.Type,
-                                            _mapper.Map<Account>(request.Transaction.Account));
+        var requestedTransaction = _mapper.Map<Transaction>(request);
 
         var savedTransaction = await _transactionRepository.Insert(requestedTransaction);
         var transactionDto = _mapper.Map<TransactionDto>(savedTransaction);
