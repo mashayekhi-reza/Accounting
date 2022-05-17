@@ -1,13 +1,11 @@
 ﻿using Accounting.Application.DTOs;
 using Accounting.Application.Tests.Mocks;
 using Accounting.Application.Transactions.Commands;
-using Accounting.Domain.Entities;
 using Accounting.Domain.Entities.Transaction;
 using Accounting.Domain.Enums;
 using AutoMapper;
 using FluentAssertions;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace Accounting.Application.Tests.Transactions.Commands;

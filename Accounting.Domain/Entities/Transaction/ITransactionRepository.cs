@@ -6,5 +6,6 @@ namespace Accounting.Domain.Entities.Transaction;
 public interface ITransactionRepository
 {
     Task<Transaction> Insert(Transaction transaction);
+    Task<List<Transaction>> GetAll();
 }
 
