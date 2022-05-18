@@ -1,4 +1,5 @@
-﻿using Accounting.Domain.Entities;
+﻿using Accounting.Common;
+using Accounting.Domain.Entities;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -42,11 +43,13 @@ public class EntityTest
 
     [Theory]
     [MemberData(nameof(InvalidModifiedOn))]
-    public void ThrowExceptionWhenModifiedOnIsNotLaterThanCreatedOn(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy)
+    public void ThrowExceptionWhenModifiedOnDateIsNotLaterThanCreatedOnDate(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy)
     {
         Action action = () => new MockEntity(id, createdOn, createdBy, modifiedOn, modifiedBy);
 
-        action.Should().Throw<ArgumentException>().WithMessage($"The {nameof(Entity.ModifiedOn)} should be later than {nameof(Entity.CreatedOn)}!");
+        action.Should().Throw<ValidationException>()
+            .Where(e => e.ErrorCode == ErrorCode.InvalidEntityOperation)
+            .WithMessage($"The {nameof(Entity.ModifiedOn)} should be later than {nameof(Entity.CreatedOn)}!");
     }
 }
 

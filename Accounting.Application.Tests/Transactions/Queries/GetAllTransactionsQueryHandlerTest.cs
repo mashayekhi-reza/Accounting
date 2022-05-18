@@ -26,7 +26,7 @@ public class GetAllTransactionsQueryHandlerTest
     }
 
     [Fact]
-    public async void GetAllTransctions()
+    public async void GetAllTransctionsSuccessfully()
     {
         var handler = new GetAllTransactionsQueryHandler(_transactionRepository, _mapper);        
         

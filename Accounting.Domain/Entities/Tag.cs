@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Accounting.Common;
+using System;
 
 namespace Accounting.Domain.Entities;
 
@@ -8,7 +9,7 @@ public class Tag : Entity
         : base(id, createdOn, createdBy, modifiedOn, modifiedBy)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentNullException($"The {nameof(Name)} is invalid!");
+            throw new ValidationException(ErrorCode.InvalidTagOperation, $"The {nameof(Name)} is invalid!");
 
         Name = name;
     }

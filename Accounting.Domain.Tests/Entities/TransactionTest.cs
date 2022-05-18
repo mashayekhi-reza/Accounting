@@ -1,7 +1,7 @@
+using Accounting.Common;
 using Accounting.Domain.Entities;
 using Accounting.Domain.Entities.Transaction;
 using Accounting.Domain.Enums;
-using Accounting.Domain.Exceptions;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ public class TransactionTest
 
     [Theory]
     [MemberData(nameof(ValidTransactionsData))]
-    public void CreateValidTransaction(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy, 
+    public void CreateTransactionSuccessfully(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
         decimal amount, TransactionType type, Account account)
     {
         var trn = new Transaction(id, createdOn, createdBy, modifiedOn, modifiedBy,
@@ -41,6 +41,18 @@ public class TransactionTest
     }
 
     [Fact]
+    public void ThrowExceptionWhenTransactionAmountIsNegative()
+    {
+        Action action = () => new Transaction(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), -10.00m, TransactionType.Credit,
+            new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Cash")); ;
+
+
+        action.Should().Throw<ValidationException>()
+            .Where(e => e.ErrorCode == ErrorCode.InvalidTransactionOperation)
+            .WithMessage($"The {nameof(Transaction.Amount)} is out of range!");
+    }
+
+    [Fact]
     public void AddTagSuccessfully()
     {
         var trn = CreateAValidTransaction();
@@ -53,7 +65,7 @@ public class TransactionTest
     }
 
     [Fact]
-    public void AddSeveralTagsSuccessfully()
+    public void AddSeveralTagsToTheTransactionSuccessfully()
     {
         Transaction trn = CreateAValidTransaction();
         var tags = new List<Tag>
@@ -71,24 +83,28 @@ public class TransactionTest
     }
 
     [Fact]
-    public void ThrowExceptionWhenTagIsAvailable()
+    public void ThrowExceptionWhenATagIsAvailableInTransactionTagListedAndItIsRequestedToBeAdded()
     {
         Transaction trn = CreateAValidTransaction();
         var tag = new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Grocery");
         trn.AddTag(tag);
 
         Action action = () => trn.AddTag(tag);
-        action.Should().Throw<InvalidTagOperation>($"The {nameof(Tag)} has already been added!");
+        action.Should().Throw<ValidationException>()
+            .Where(e => e.ErrorCode == ErrorCode.InvalidTagOperation)
+            .WithMessage($"The {nameof(Tag)} has already been added!");
     }
 
     [Fact]
-    public void ThrowExceptionWhenRemoveTagRequestedAndTagIsNotInTheList()
+    public void ThrowExceptionWhenRemoveTagRequestedAndTagIsNotInTheTransactionList()
     {
         Transaction trn = CreateAValidTransaction();
         var tag = new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Grocery");
 
         Action action = () => trn.RemoveTag(tag);
-        action.Should().Throw<InvalidTagOperation>($"The {nameof(Tag)} has not found!");
+        action.Should().Throw<ValidationException>()
+            .Where(e => e.ErrorCode == ErrorCode.InvalidTagOperation)
+            .WithMessage($"The {nameof(Tag)} has not found!");
     }
 
     private static Transaction CreateAValidTransaction()

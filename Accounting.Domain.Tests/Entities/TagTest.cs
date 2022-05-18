@@ -1,4 +1,5 @@
-﻿using Accounting.Domain.Entities;
+﻿using Accounting.Common;
+using Accounting.Domain.Entities;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -40,10 +41,12 @@ public class TagTest
 
     [Theory]
     [MemberData(nameof(InvalidTagNames))]
-    public void ThrowExceptionWhenNameIsNotValid(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy, string name)
+    public void ThrowExceptionWhenTagNameIsNotValid(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy, string name)
     {
         Action action = () => new Tag(id, createdOn, createdBy, modifiedOn, modifiedBy, name);
 
-        action.Should().Throw<ArgumentNullException>().WithMessage($"Value cannot be null. (Parameter 'The {nameof(Tag.Name)} is invalid!')");
+        action.Should().Throw<ValidationException>()
+            .Where(e => e.ErrorCode == ErrorCode.InvalidTagOperation)
+            .WithMessage($"The {nameof(Tag.Name)} is invalid!");
     }
 }

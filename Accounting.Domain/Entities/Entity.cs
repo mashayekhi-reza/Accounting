@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Accounting.Common;
+using System;
 
 namespace Accounting.Domain.Entities;
 
@@ -13,7 +14,7 @@ public abstract class Entity
     public Entity(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy)
     {
         if (modifiedOn != DateTime.MinValue & modifiedOn <= createdOn)
-            throw new ArgumentException($"The {nameof(ModifiedOn)} should be later than {nameof(CreatedOn)}!");
+            throw new ValidationException(ErrorCode.InvalidEntityOperation, $"The {nameof(ModifiedOn)} should be later than {nameof(CreatedOn)}!");
 
         ID = id;
         CreatedOn = createdOn;
