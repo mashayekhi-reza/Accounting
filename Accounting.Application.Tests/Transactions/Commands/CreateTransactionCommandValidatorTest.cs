@@ -34,7 +34,7 @@ public class CreateTransactionCommandValidatorTest
 
     [Theory]
     [MemberData(nameof(ValidCreateTransactionCommandData))]
-    public void ValidCreateTransactionCommand(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
+    public void CreateTransactionCommandsAreValidSoThatTheValidatorShouldReturnIsValid(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
             decimal amount, TransactionType type, AccountDto account)
     {
         var request = new CreateTransactionCommand(
@@ -47,7 +47,7 @@ public class CreateTransactionCommandValidatorTest
 
     [Theory]
     [MemberData(nameof(NegativeAmounts))]
-    public void ValidationFailedForNegativeAmounts(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
+    public void ValidationFailedForNegativeTransactionAmounts(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
             decimal amount, TransactionType type, AccountDto account)
     {
         var request = new CreateTransactionCommand(
@@ -60,7 +60,7 @@ public class CreateTransactionCommandValidatorTest
     }
 
     [Fact]
-    public void ValidationFailedForNullAccountName()
+    public void ValidationFailedForNullTransactionAccountName()
     {
         var request = new CreateTransactionCommand(
             new TransactionDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), 10.00m, TransactionType.Credit,

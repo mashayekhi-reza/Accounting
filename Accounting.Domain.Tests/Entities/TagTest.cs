@@ -41,7 +41,7 @@ public class TagTest
 
     [Theory]
     [MemberData(nameof(InvalidTagNames))]
-    public void ThrowExceptionWhenNameIsNotValid(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy, string name)
+    public void ThrowExceptionWhenTagNameIsNotValid(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy, string name)
     {
         Action action = () => new Tag(id, createdOn, createdBy, modifiedOn, modifiedBy, name);
 

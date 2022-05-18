@@ -23,7 +23,7 @@ public class TransactionTest
 
     [Theory]
     [MemberData(nameof(ValidTransactionsData))]
-    public void CreateValidTransaction(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
+    public void CreateTransactionSuccessfully(Guid id, DateTime createdOn, Guid createdBy, DateTime? modifiedOn, Guid? modifiedBy,
         decimal amount, TransactionType type, Account account)
     {
         var trn = new Transaction(id, createdOn, createdBy, modifiedOn, modifiedBy,
@@ -41,7 +41,7 @@ public class TransactionTest
     }
 
     [Fact]
-    public void ThrowExceptionWhenAmountIsNegative()
+    public void ThrowExceptionWhenTransactionAmountIsNegative()
     {
         Action action = () => new Transaction(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), -10.00m, TransactionType.Credit,
             new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Cash")); ;
@@ -65,7 +65,7 @@ public class TransactionTest
     }
 
     [Fact]
-    public void AddSeveralTagsSuccessfully()
+    public void AddSeveralTagsToTheTransactionSuccessfully()
     {
         Transaction trn = CreateAValidTransaction();
         var tags = new List<Tag>
@@ -83,7 +83,7 @@ public class TransactionTest
     }
 
     [Fact]
-    public void ThrowExceptionWhenTagIsAvailable()
+    public void ThrowExceptionWhenATagIsAvailableInTransactionTagListedAndItIsRequestedToBeAdded()
     {
         Transaction trn = CreateAValidTransaction();
         var tag = new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Grocery");
@@ -96,7 +96,7 @@ public class TransactionTest
     }
 
     [Fact]
-    public void ThrowExceptionWhenRemoveTagRequestedAndTagIsNotInTheList()
+    public void ThrowExceptionWhenRemoveTagRequestedAndTagIsNotInTheTransactionList()
     {
         Transaction trn = CreateAValidTransaction();
         var tag = new Tag(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), "Grocery");

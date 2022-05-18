@@ -41,7 +41,7 @@ public class AccountTest
 
     [Theory]
     [MemberData(nameof(InvalidAccountNames))]
-    public void ThrowExceptionWhenNameIsNotValid(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy, string name)
+    public void ThrowExceptionWhenAccountNameIsNotValid(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy, string name)
     {
         Action action = () => new Account(id, createdOn, createdBy, modifiedOn, modifiedBy, name);
 

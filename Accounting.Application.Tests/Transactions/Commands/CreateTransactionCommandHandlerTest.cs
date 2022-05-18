@@ -29,7 +29,7 @@ public class CreateTransactionCommandHandlerTest
     }
 
     [Fact]
-    public async void ShouldCreateATransaction()
+    public async void ShouldCreateTransactionSuccessfully()
     {
         var handler = new CreateTransactionCommandHandler(_transactionRepository, _mapper);
         var id = Guid.NewGuid();

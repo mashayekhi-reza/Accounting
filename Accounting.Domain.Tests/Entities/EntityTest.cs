@@ -43,7 +43,7 @@ public class EntityTest
 
     [Theory]
     [MemberData(nameof(InvalidModifiedOn))]
-    public void ThrowExceptionWhenModifiedOnIsNotLaterThanCreatedOn(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy)
+    public void ThrowExceptionWhenModifiedOnDateIsNotLaterThanCreatedOnDate(Guid id, DateTime createdOn, Guid createdBy, DateTime modifiedOn, Guid modifiedBy)
     {
         Action action = () => new MockEntity(id, createdOn, createdBy, modifiedOn, modifiedBy);
 
