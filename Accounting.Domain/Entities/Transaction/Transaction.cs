@@ -1,5 +1,5 @@
-﻿using Accounting.Domain.Enums;
-using Accounting.Domain.Exceptions;
+﻿using Accounting.Common;
+using Accounting.Domain.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +16,7 @@ public class Transaction : Entity
         : base(id, createdOn, createdBy, modifiedOn, modifiedBy)
     {
         if (amount <= 0)
-            throw new InvalidTransaction($"The {nameof(Amount)} is out of range!");
+            throw new ValidationException(ErrorCode.InvalidTransactionOperation, $"The {nameof(Amount)} is out of range!");
 
         Amount = amount;
         Type = type;
@@ -27,7 +27,7 @@ public class Transaction : Entity
     public void AddTag(Tag tag)
     {
         if (Tags.Contains(tag))
-            throw new InvalidTagOperation($"The {nameof(Tag)} has already been added!");
+            throw new ValidationException(ErrorCode.InvalidTagOperation, $"The {nameof(Tag)} has already been added!");
 
         Tags.Add(tag);
     }
@@ -35,7 +35,7 @@ public class Transaction : Entity
     public void RemoveTag(Tag tag)
     {
         if (!Tags.Contains(tag))
-            throw new InvalidTagOperation($"The {nameof(Tag)} has not found!");
+            throw new ValidationException(ErrorCode.InvalidTagOperation, $"The {nameof(Tag)} has not found!");
 
         Tags.Remove(tag);
     }

@@ -1,4 +1,5 @@
-﻿using Accounting.Domain.Entities;
+﻿using Accounting.Common;
+using Accounting.Domain.Entities;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,9 @@ public class AccountTest
     {
         Action action = () => new Account(id, createdOn, createdBy, modifiedOn, modifiedBy, name);
 
-        action.Should().Throw<ArgumentNullException>().WithMessage($"Value cannot be null. (Parameter 'The {nameof(Account.Name)} is invalid!')");
+        action.Should().Throw<ValidationException>()
+            .Where(e => e.ErrorCode == ErrorCode.InvalidAccountOperation)
+            .WithMessage($"The {nameof(Account.Name)} is invalid!");
+
     }
 }
