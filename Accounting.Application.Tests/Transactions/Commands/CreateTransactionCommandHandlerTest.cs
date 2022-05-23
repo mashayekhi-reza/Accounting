@@ -34,7 +34,8 @@ public class CreateTransactionCommandHandlerTest
         var handler = new CreateTransactionCommandHandler(_transactionRepository, _mapper);
         var id = Guid.NewGuid();
         var request = new CreateTransactionCommand(new TransactionDto(id, DateTime.Now, Guid.NewGuid(), null, null, 10.00m, TransactionType.Debit,
-            new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Online")));
+            new AccountDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Online",
+            new TenantDto(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid()))));
 
         var response = await handler.Handle(request, new System.Threading.CancellationToken());
 

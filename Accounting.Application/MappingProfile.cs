@@ -10,6 +10,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        CreateMap<TenantDto, Tenant>().ReverseMap();
         CreateMap<AccountDto, Account>().ReverseMap();
         CreateMap<Transaction, TransactionDto>();
         CreateMap<CreateTransactionCommand, Transaction>()
