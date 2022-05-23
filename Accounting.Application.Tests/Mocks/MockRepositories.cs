@@ -16,10 +16,12 @@ public static class MockRepositories
         var transactions = new List<Transaction>
         {
             new Transaction(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, 10.00m, TransactionType.Credit,
-            new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Cash")),
+            new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Cash", 
+                new Tenant(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid()))),
 
             new Transaction(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, 10.00m, TransactionType.Credit,
-            new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Bank"))
+            new Account(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), null, null, "Bank", 
+                new Tenant(Guid.NewGuid(), DateTime.Now, Guid.NewGuid(), DateTime.Now, Guid.NewGuid())))
         };
 
         var repo = new Mock<ITransactionRepository>();
